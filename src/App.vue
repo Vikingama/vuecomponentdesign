@@ -67,17 +67,23 @@
             <!-- 08:renderlessComponentBasic -->
             <div class="max-w-md mx-auto">
                 <fetch-json url="/albums.json">
-                    <div class="card" slot-scope="{ data: albums, loading }">
-                        <h1 class="text-2xl font-bold mb-6">Top Death Metal Albums</h1>
-                        <div v-if="loading">Loading...</div>
-                        <div v-else class="album-grid">
-                            <div v-for="(album, key) in albums" :key="key" class="album-grid-item">
-                                <img :src="album.artwork" />
-                                <h2 class="album-title">{{ album.title }}</h2>
-                                <p class="album-artist">{{ album.artist }}</p>
+                    <template #default="{ data: albums, loading }">
+                        <div class="card">
+                            <h1 class="text-2xl font-bold mb-6">Top Death Metal Albums</h1>
+                            <div v-if="loading">Loading...</div>
+                            <div v-else class="album-grid">
+                                <div
+                                    v-for="(album, key) in albums"
+                                    :key="key"
+                                    class="album-grid-item"
+                                >
+                                    <img :src="album.artwork" />
+                                    <h2 class="album-title">{{ album.title }}</h2>
+                                    <p class="album-artist">{{ album.artist }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </template>
                 </fetch-json>
             </div>
             <br />
@@ -99,6 +105,112 @@
                 <stacked-tag-input v-model="tags"></stacked-tag-input>
             </div>
             <br />
+            <!-- 12:this.$el -->
+            <div
+                class="min-h-0 bg-grey-darker p-4"
+                style="border-width: 1px;border-radius: 0.25rem;background: #fff;"
+            >
+                <div
+                    style="width: 420px"
+                    class="mx-auto border-l border-r border-dashed border-grey-dark py-4 mb-4"
+                >
+                    <profile-card></profile-card>
+                </div>
+                <div
+                    style="width: 300px"
+                    class="border-l border-r border-dashed border-grey-dark py-4 mx-auto"
+                >
+                    <profile-card></profile-card>
+                </div>
+            </div>
+            <br />
+            <!-- 13:provide & inject -->
+            <div class="min-h-0 bg-grey-darker">
+                <div class="max-w-sm mx-auto">
+                    <accordion-list>
+                        <accordion-item :itemId="1">
+                            <template #header>Item A</template>
+                            <template #content>
+                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus auctor massa, vitae posuere sem tincidunt eget. Duis non vestibulum diam. Pellentesque eleifend interdum mollis. Donec porttitor dui enim. Maecenas a semper sem. Nunc molestie turpis vitae sem auctor, non venenatis velit ultricies.</span>
+                            </template>
+                        </accordion-item>
+                        <accordion-item :itemId="2">
+                            <template #header>Item B</template>
+                            <template #content>
+                                <span>Vestibulum nec urna non nisi viverra vehicula ut sed metus. Cras scelerisque condimentum nunc ut mattis. Curabitur euismod sagittis efficitur. Cras vel orci consectetur, ullamcorper magna vitae, sodales mauris. Aliquam tempus volutpat mi. Nunc vitae molestie ante. In sed varius tortor.</span>
+                            </template>
+                        </accordion-item>
+                        <accordion-item :itemId="3">
+                            <template #header>Item C</template>
+                            <template #content>
+                                <span>Sed porttitor mattis egestas. Duis nec rhoncus ligula. Etiam pellentesque mattis mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas vel dapibus nulla. Phasellus lobortis nibh et faucibus tincidunt. Phasellus non iaculis turpis, vitae gravida lacus.</span>
+                            </template>
+                        </accordion-item>
+                    </accordion-list>
+                </div>
+            </div>
+            <br />
+            <!-- 14:complex -->
+            <div class="min-h-0 bg-grey-darker">
+                <div class="max-w-sm mx-auto">
+                    <div class="card">
+                        <h1 class="text-2xl font-bold mb-6">Your Contacts</h1>
+                        <sortable-list v-model="contacts">
+                            <template #default="{ items: contacts }">
+                                <div class="contact-list">
+                                    <sortable-item v-for="contact in contacts" :key="contact.id">
+                                        <div class="contact-list-item">
+                                            <div class="contact-list-contact">
+                                                <img
+                                                    :src="contact.avatar"
+                                                    class="contact-list-avatar"
+                                                    alt
+                                                />
+                                                <div>
+                                                    <div
+                                                        class="contact-list-name"
+                                                    >{{ contact.name }}</div>
+                                                    <div
+                                                        class="contact-list-email"
+                                                    >{{ contact.email }}</div>
+                                                </div>
+                                            </div>
+                                            <sortable-handle>
+                                                <svg
+                                                    class="contact-list-handle"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 24 24"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        d="M14 4h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zM8 4h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm6 6h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1zm-6 0h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1zm6 6h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1zm-6 0h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"
+                                                    />
+                                                </svg>
+                                            </sortable-handle>
+                                        </div>
+                                    </sortable-item>
+                                </div>
+                            </template>
+                        </sortable-list>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <!-- 15:complexMax -->
+            <div class="max-w-sm mx-auto bg-white rounded shadow-lg p-8" style="height: 36vh;">
+                <div>
+                    <search-select
+                        v-model="selectedBand"
+                        :options="bands"
+                        :filterFunction="applySearchFilter"
+                    ></search-select>
+                </div>
+                <br />
+                <div style="text-align: center;">
+                    <button type="button" class="btn btn-blue">Save Changes</button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -116,6 +228,13 @@ import {
     TagInput,
     InlineTagInput,
     StackedTagInput,
+    ProfileCard,
+    AccordionList,
+    AccordionItem,
+    SortableList,
+    SortableItem,
+    SortableHandle,
+    SearchSelect
 } from "./components"
 
 export default {
@@ -132,6 +251,13 @@ export default {
         TagInput,
         InlineTagInput,
         StackedTagInput,
+        ProfileCard,
+        AccordionList,
+        AccordionItem,
+        SortableList,
+        SortableItem,
+        SortableHandle,
+        SearchSelect
     },
     data () {
         return {
@@ -139,7 +265,59 @@ export default {
             date: "Apr 12 2018",
             modalOpen: false,
             tags: ['awesome', 'excellent', 'amazing'],
+            contacts: [
+                {
+                    id: 1,
+                    name: 'Alfreda Ferreira',
+                    email: 'alfreda.ferreira@example.com',
+                    avatar: 'https://randomuser.me/api/portraits/med/women/6.jpg',
+                },
+                {
+                    id: 2,
+                    name: 'Leevi Wirtanen',
+                    email: 'leevi.wirtanen@example.com',
+                    avatar: 'https://randomuser.me/api/portraits/med/men/19.jpg',
+                },
+                {
+                    id: 3,
+                    name: 'Kaitlin Sutton',
+                    email: 'kaitlin.sutton@example.com',
+                    avatar: 'https://randomuser.me/api/portraits/med/women/2.jpg',
+                },
+                {
+                    id: 4,
+                    name: 'Alice Wilson',
+                    email: 'alice.wilson@example.com',
+                    avatar: 'https://randomuser.me/api/portraits/med/women/62.jpg',
+                },
+                {
+                    id: 5,
+                    name: 'Etienne Roy',
+                    email: 'etienne.roy@example.com',
+                    avatar: 'https://randomuser.me/api/portraits/med/men/4.jpg',
+                },
+            ],
+            selectedBand: null,
+            bands: [
+                'Anthrax',
+                'Dark Angel',
+                'Destruction',
+                'Exodus',
+                'Flotsam and Jetsam',
+                'Kreator',
+                'Megadeth',
+                'Metallica',
+                'Overkill',
+                'Sepultura',
+                'Slayer',
+                'Testament',
+            ],
         }
-    }
+    },
+    methods: {
+        applySearchFilter (search, options) {
+            return options.filter(option => option.toLowerCase().startsWith(search.toLowerCase()));
+        },
+    },
 }
 </script>

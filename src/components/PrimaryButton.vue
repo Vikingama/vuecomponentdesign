@@ -10,6 +10,8 @@ export default {
 </script>
 <style scoped>
 .w-100 {
+    display: flex;
+    justify-content: center;
     width: 100%;
 }
 </style>
