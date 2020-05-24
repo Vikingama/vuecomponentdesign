@@ -67,7 +67,7 @@ export default {
                 return
             }
             this.isOpen = true;
-            this.$$nextTick(() => {
+            this.$nextTick(() => {
                 this.setupPopper();
                 this.$refs.search.focus()
                 this.scrollToHighlighted();
